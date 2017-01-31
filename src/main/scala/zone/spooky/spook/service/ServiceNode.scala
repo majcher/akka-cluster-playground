@@ -1,7 +1,6 @@
 package zone.spooky.spook.service
 
 import akka.actor.{ActorSystem, Props}
-import akka.cluster.singleton.{ClusterSingletonManagerSettings, ClusterSingletonManager}
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import com.typesafe.config.ConfigFactory
@@ -15,6 +14,7 @@ object ServiceNode {
     val port = if (args.isEmpty) "0" else args(0)
     val config = ConfigFactory.parseString(s"akka.remote.netty.tcp.port=$port").
       withFallback(ConfigFactory.parseString("akka.cluster.roles = [backend]")).
+      withFallback(ConfigFactory.parseString(s"""akka.cluster.distributed-data.durable.lmdb.dir = "storage/$port"""")).
       withFallback(ConfigFactory.load())
 
     implicit val system = ActorSystem("ClusterSystem", config)

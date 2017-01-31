@@ -2,8 +2,12 @@ package zone.spooky.spook.service
 
 case object GetConfiguration
 
-final case class GetConfigurationResponse(config: Map[String, String])
+sealed trait GetConfigurationResponse
+case object GetConfigurationFailure extends GetConfigurationResponse
+final case class GetConfigurationSuccess(config: Map[String, String]) extends GetConfigurationResponse
 
 final case class ConfigurationChanged(key: String, value: String)
 
-case object ConfigurationSaved
+sealed trait ConfigurationChangedResponse
+case object ConfigurationChangedSuccess extends ConfigurationChangedResponse
+case object ConfigurationChangedFailure extends ConfigurationChangedResponse

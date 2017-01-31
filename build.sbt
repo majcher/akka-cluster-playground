@@ -1,4 +1,4 @@
-val akkaVersion = "2.4.14"
+val akkaVersion = "2.4.16"
 val akkaHttpVersion = "10.0.3"
 
 val project = Project(
@@ -15,6 +15,7 @@ val project = Project(
       "com.typesafe.akka" %% "akka-actor" % akkaVersion,
       "com.typesafe.akka" %% "akka-http" % akkaHttpVersion,
       "com.typesafe.akka" %% "akka-http-xml" % akkaHttpVersion,
+      "com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpVersion,
       "com.typesafe.akka" %% "akka-remote" % akkaVersion,
       "com.typesafe.akka" %% "akka-cluster" % akkaVersion,
       "com.typesafe.akka" %% "akka-cluster-metrics" % akkaVersion,
