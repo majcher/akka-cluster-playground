@@ -12,10 +12,19 @@ case class ConfigurationServiceRest(configActor: ActorRef)(implicit system: Acto
   implicit val askTimeout = Timeout(5.seconds)
 
   val route =
-    path("hello") {
+    path("get") {
       get {
-        onSuccess(configActor ? GetConfiguration) {
-          complete("ok")
+        onSuccess((configActor ? GetConfiguration).mapTo[GetConfigurationResponse]) { c =>
+          complete(c.config.mkString(", \n"))
+        }
+      }
+    } ~
+    path("put") {
+      parameters("key", "value") { (key, value) =>
+        get {
+          onSuccess(configActor ? ConfigurationChanged(key, value)) { _ =>
+            complete("ok")
+          }
         }
       }
     }
